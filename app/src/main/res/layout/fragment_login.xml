@@ -34,12 +34,12 @@
         android:id="@+id/texttext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="190dp"
         android:text="Ещё не зарегистрированы?"
         android:textColor="#FFFFFF"
         android:textFontWeight="600"
-        android:textSize="12sp"
+        android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:targetApi="p" />
@@ -48,42 +48,42 @@
         android:id="@+id/signUpButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
         android:layout_marginBottom="41dp"
         android:clickable="true"
         android:focusable="true"
+        android:layout_marginEnd="50dp"
         android:text="Создать Аккаунт"
         android:textColor="#EC9A1E"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@id/texttext"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/texttext" />
 
 
     <EditText
-        android:id="@+id/inputEmail"
+        android:id="@+id/loginEmail"
+        style="@style/editText"
         android:layout_width="320dp"
         android:layout_height="50dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/signUpButton"
-        style="@style/editText"
+        android:layout_marginTop="40dp"
         android:hint="Почта"
-        android:inputType="textPassword"
-        android:layout_marginTop="40dp"/>
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/signUpButton" />
 
     <EditText
         android:id="@+id/passwordLogin"
+        style="@style/editText"
         android:layout_width="320dp"
         android:layout_height="50dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/inputEmail"
-        app:layout_constraintEnd_toEndOf="parent"
-        style="@style/editText"
+        android:layout_marginTop="15dp"
         android:hint="Пароль"
         android:inputType="textPassword"
-        android:layout_marginTop="15dp"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loginEmail" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
         android:id="@+id/LoginButton1"
         style="@style/blueButtonStyle"
         android:layout_width="320dp"
@@ -96,18 +96,20 @@
         app:backgroundTint="#EC9A1E"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/passwordLogin" />
+        app:layout_constraintTop_toBottomOf="@id/passwordLogin"
+        app:spinning_bar_color="@color/white"/>
+
     <TextView
         android:id="@+id/tvForgotPassword"
+        style="@style/h2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
-        app:layout_constraintTop_toBottomOf="@id/passwordLogin"
-        app:layout_constraintStart_toStartOf="@id/LoginButton1"
         android:text="Забыли пароль?"
         android:textColor="@color/white"
-        style="@style/h2"
-        />
+        app:layout_constraintStart_toStartOf="@id/LoginButton1"
+        app:layout_constraintTop_toBottomOf="@id/passwordLogin" />
+
     <ImageView
         android:id="@+id/passwordVisibilityToggle"
         android:layout_width="24dp"
@@ -223,8 +225,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text55" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

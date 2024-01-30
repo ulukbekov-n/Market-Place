@@ -16,21 +16,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:src="@drawable/back_arrow"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/textAuto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="151dp"
-        android:text="Авторизоваться"
+        android:text="Зарегистрироваться"
         android:textColor="#FFFFFF"
         android:textFontWeight="600"
         android:textSize="22sp"
@@ -39,12 +32,39 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:targetApi="p" />
 
+    <TextView
+        android:id="@+id/texttext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="190dp"
+        android:text="У Вас есть аккаунт?"
+        android:textColor="#FFFFFF"
+        android:textFontWeight="600"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:targetApi="p" />
+
+    <TextView
+        android:id="@+id/toLoginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="41dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="Войти"
+        android:textColor="#EC9A1E"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@id/texttext"
+        app:layout_constraintTop_toTopOf="@id/texttext" />
     <EditText
         android:id="@+id/userNameRegister"
         style="@style/editText"
         android:layout_width="320dp"
         android:layout_height="50dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="35dp"
         android:hint="Имя пользователя"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="@id/RegisterButton"
