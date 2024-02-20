@@ -5,7 +5,7 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.gms.google-services")
     id ("kotlin-kapt")
-//    id ("dagger.hilt.android.plugin")
+    id("com.google.dagger.hilt.android")
 
 
 }
@@ -78,7 +78,8 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-    implementation ("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
+    implementation ("org.jetbrains.kotlin:kotlin-stdlib:1.6.10")
+
 
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
@@ -100,8 +101,8 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.4.2")
 
 // Dagger hilt
-    implementation("com.google.dagger:hilt-android:2.38.1")
-//    kapt ("com.google.dagger:hilt-compiler:2.38.1")
+    implementation("com.google.dagger:hilt-android:2.48.1")
+    kapt ("com.google.dagger:hilt-compiler:2.48.1")
 
 
 // Firebase

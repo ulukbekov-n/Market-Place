@@ -28,10 +28,7 @@
         <activity
             android:name="com.example.marketplace.activity.ShoppingActivity"
             android:exported="false" />
-        <activity
-            android:name="com.example.marketplace.activity.ProductAdderActivity"
-            android:label="ProductAdderActivity">
-        </activity>
+
 
 
 
