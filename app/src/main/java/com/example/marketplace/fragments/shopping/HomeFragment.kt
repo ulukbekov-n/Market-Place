@@ -9,11 +9,10 @@ import com.example.marketplace.adapters.HomeViewpagerAdapter
 import com.example.marketplace.fragments.categories.AccessoryFragment
 import com.example.marketplace.fragments.categories.ChairFragment
 import com.example.marketplace.fragments.categories.FurnitureFragment
-import com.example.marketplace.fragments.categories.MainCategory
+import com.example.marketplace.fragments.categories.MainCategoryFragment
 import com.example.marketplace.fragments.categories.TableFragment
 import com.example.newapptester1.R
 import com.example.newapptester1.databinding.FragmentHomeBinding
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 class HomeFragment:Fragment(R.layout.fragment_home) {
@@ -32,7 +31,7 @@ class HomeFragment:Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
 
         val categoriesFragments = arrayListOf<Fragment>(
-            MainCategory(),
+            MainCategoryFragment(),
             ChairFragment(),
             TableFragment(),
             AccessoryFragment(),

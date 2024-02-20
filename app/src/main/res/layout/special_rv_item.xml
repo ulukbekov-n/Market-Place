@@ -14,7 +14,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/img_ad"
+            android:id="@+id/imageSpecialRv"
             android:layout_width="90dp"
             android:layout_height="90dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -24,12 +24,12 @@
              />
 
         <TextView
-            android:id="@+id/tv_ad_name"
+            android:id="@+id/specialProductName"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:text="Scotch Premium"
-            app:layout_constraintStart_toEndOf="@id/img_ad"
-            app:layout_constraintTop_toTopOf="@id/img_ad"
+            app:layout_constraintStart_toEndOf="@id/imageSpecialRv"
+            app:layout_constraintTop_toTopOf="@id/imageSpecialRv"
             android:layout_marginTop="7dp"
             android:layout_marginStart="18dp"
             android:fontFamily="@font/poppins_thin"
@@ -38,12 +38,12 @@
             android:textSize="17sp"/>
 
         <TextView
-            android:id="@+id/tv_ad_price"
+            android:id="@+id/specialProductPrice"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:text="$1600"
-            app:layout_constraintStart_toStartOf="@id/tv_ad_name"
-            app:layout_constraintTop_toBottomOf="@id/tv_ad_name"
+            app:layout_constraintStart_toStartOf="@id/specialProductName"
+            app:layout_constraintTop_toBottomOf="@id/specialProductName"
             android:textColor="@color/black"
             android:textSize="12sp"
             android:fontFamily="@font/sf_pro_display"/>
@@ -59,7 +59,7 @@
             android:textSize="10sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_ad_price"
+            app:layout_constraintTop_toBottomOf="@id/specialProductPrice"
             android:layout_marginTop="10dp"
             android:textAllCaps="false"
             />
@@ -69,7 +69,7 @@
             android:layout_height="23dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/icon_background"
+            android:background="@drawable/icon_back"
             android:orientation="vertical">
             <ImageView
                 android:layout_width="10dp"
