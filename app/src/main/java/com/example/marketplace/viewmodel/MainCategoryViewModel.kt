@@ -36,68 +36,55 @@ class MainCategoryViewModel @Inject constructor(
     }
 
     fun fetchSpecialProducts() {
-        viewModelScope.launch {
-
-            _specialProducts.emit(Resource.Loading())
-        }
+        _specialProducts.value = Resource.Loading()
         firestore.collection("Products")
-            .whereEqualTo("category", "Special products").get().addOnSuccessListener { result ->
-                val specialProductsList = result.toObjects(Product::class.java)
-                viewModelScope.launch {
-                    _specialProducts.emit(Resource.Success(specialProductsList))
+            .whereEqualTo("category", "Special products")
+            .addSnapshotListener { value, error ->
+                if (error != null) {
+                    _specialProducts.value = Resource.Error(error.message.toString())
+                    return@addSnapshotListener
                 }
 
-
-            }.addOnFailureListener {
-                viewModelScope.launch {
-                    _specialProducts.emit(Resource.Error(it.message.toString()))
-                }
+                val specialProductsList = value?.toObjects(Product::class.java) ?: emptyList()
+                _specialProducts.value = Resource.Success(specialProductsList)
             }
     }
 
     fun fetchBestDeals() {
-        viewModelScope.launch {
-            _bestDealsProducts.emit(Resource.Loading())
-        }
+        _bestDealsProducts.value = Resource.Loading()
         firestore.collection("Products")
-            .whereEqualTo("category", "Best Deals").get()
-            .addOnSuccessListener { result ->
-                val bestDealsProducts = result.toObjects(Product::class.java)
-                viewModelScope.launch {
-                    _bestDealsProducts.emit(Resource.Success(bestDealsProducts))
+            .whereEqualTo("category", "Best Deals")
+            .addSnapshotListener { value, error ->
+                if (error != null) {
+                    _bestDealsProducts.value = Resource.Error(error.message.toString())
+                    return@addSnapshotListener
                 }
 
-
-            }.addOnFailureListener {
-                viewModelScope.launch {
-                    _bestDealsProducts.emit(Resource.Error(it.message.toString()))
-                }
+                val bestDealsProducts = value?.toObjects(Product::class.java) ?: emptyList()
+                _bestDealsProducts.value = Resource.Success(bestDealsProducts)
             }
     }
 
     fun fetchBestProducts() {
         if (!pagingInfo.isPagingEnd) {
-            viewModelScope.launch {
-                _bestProducts.emit(Resource.Loading())
-            }
-            firestore.collection("Products").limit(pagingInfo.bestProductPage * 10).get()
-                .addOnSuccessListener { result ->
-                    val bestProducts = result.toObjects(Product::class.java)
+            _bestProducts.value = Resource.Loading()
+            firestore.collection("Products")
+                .limit(pagingInfo.bestProductPage * 10)
+                .addSnapshotListener { value, error ->
+                    if (error != null) {
+                        _bestProducts.value = Resource.Error(error.message.toString())
+                        return@addSnapshotListener
+                    }
+
+                    val bestProducts = value?.toObjects(Product::class.java) ?: emptyList()
                     pagingInfo.isPagingEnd = bestProducts == pagingInfo.oldBestProducts
                     pagingInfo.oldBestProducts = bestProducts
-                    viewModelScope.launch {
-                        _bestProducts.emit(Resource.Success(bestProducts))
-                    }
+                    _bestProducts.value = Resource.Success(bestProducts)
                     pagingInfo.bestProductPage++
-
-
-                }.addOnFailureListener {
-                    viewModelScope.launch {
-                        _bestProducts.emit(Resource.Error(it.message.toString()))
-                    }
                 }
         }
     }
+
 }
 
 internal data class PagingInfo(

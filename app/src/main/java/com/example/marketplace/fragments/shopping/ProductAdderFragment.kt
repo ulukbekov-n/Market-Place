@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.marketplace.data.Product
 import com.example.newapptester1.R
 import com.example.newapptester1.databinding.ProductAdderFragmentBinding
@@ -179,6 +180,8 @@ class ProductAdderFragment : Fragment() {
             )
             firestore.collection("Products").add(product).addOnSuccessListener {
                 hideLoading()
+                Toast.makeText(requireContext(), "Product saved successfully", Toast.LENGTH_SHORT).show()
+                findNavController().popBackStack()
             }.addOnFailureListener {
                 hideLoading()
 

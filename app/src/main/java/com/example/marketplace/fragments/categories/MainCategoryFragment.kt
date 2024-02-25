@@ -12,32 +12,36 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.marketplace.adapters.BestDealsAdapter
 import com.example.marketplace.adapters.BestProductAdapter
 import com.example.marketplace.adapters.SpecialProductsAdapter
 import com.example.marketplace.util.Resource
+import com.example.marketplace.util.showBottomNavigationView
 import com.example.marketplace.viewmodel.MainCategoryViewModel
 import com.example.newapptester1.R
 import com.example.newapptester1.databinding.FragmentMainCategoryBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-
 private val TAG = "MainCategoryFragment"
+
 @AndroidEntryPoint
 class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
+
     private lateinit var binding: FragmentMainCategoryBinding
     private lateinit var specialProductsAdapter: SpecialProductsAdapter
     private lateinit var bestDealsAdapter: BestDealsAdapter
-    private lateinit var bestProductAdapter: BestProductAdapter
+    private lateinit var bestProductsAdapter: BestProductAdapter
     private val viewModel by viewModels<MainCategoryViewModel>()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMainCategoryBinding.inflate(inflater)
         return binding.root
     }
@@ -47,42 +51,58 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
 
         setupSpecialProductsRv()
         setupBestDealsRv()
-        setupBestProductRv()
-        lifecycleScope.launchWhenStarted {
+        setupBestProducts()
 
+        specialProductsAdapter.onClick = {
+            val b = Bundle().apply { putParcelable("product",it) }
+            findNavController().navigate(R.id.action_homeFragment_to_productDetailsFragment,b)
+        }
+
+        bestDealsAdapter.onClick = {
+            val b = Bundle().apply { putParcelable("product",it) }
+            findNavController().navigate(R.id.action_homeFragment_to_productDetailsFragment,b)
+        }
+
+        bestProductsAdapter.onClick = {
+            val b = Bundle().apply { putParcelable("product",it) }
+            findNavController().navigate(R.id.action_homeFragment_to_productDetailsFragment,b)
+        }
+
+
+        lifecycleScope.launchWhenStarted {
             viewModel.specialProducts.collectLatest {
-                when(it){
-                    is Resource.Loading ->{
+                when (it) {
+                    is Resource.Loading -> {
                         showLoading()
                     }
-                    is Resource.Success ->{
+                    is Resource.Success -> {
                         specialProductsAdapter.differ.submitList(it.data)
                         hideLoading()
                     }
-                    is Resource.Error->{
+                    is Resource.Error -> {
                         hideLoading()
-                        Log.e(TAG,it.message.toString())
-                        Toast.makeText(requireContext(),it.message,Toast.LENGTH_LONG).show()
+                        Log.e(TAG, it.message.toString())
+                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     }
                     else -> Unit
                 }
             }
         }
-        lifecycleScope.launchWhenStarted {
 
+        lifecycleScope.launchWhenStarted {
             viewModel.bestDealsProducts.collectLatest {
-                when(it){
-                    is Resource.Loading ->{
+                when (it) {
+                    is Resource.Loading -> {
                         showLoading()
                     }
-                    is Resource.Success ->{
+                    is Resource.Success -> {
                         bestDealsAdapter.differ.submitList(it.data)
                         hideLoading()
                     }
-                    is Resource.Error->{
+                    is Resource.Error -> {
                         hideLoading()
-                        Log.e(TAG,it.message.toString())
-                        Toast.makeText(requireContext(),it.message,Toast.LENGTH_LONG).show()
+                        Log.e(TAG, it.message.toString())
+                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     }
                     else -> Unit
                 }
@@ -90,39 +110,41 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
         }
 
         lifecycleScope.launchWhenStarted {
-
             viewModel.bestProducts.collectLatest {
-                when(it){
-                    is Resource.Loading ->{
+                when (it) {
+                    is Resource.Loading -> {
                         binding.bestProductsProgressbar.visibility = View.VISIBLE
                     }
-                    is Resource.Success ->{
-                        bestProductAdapter.differ.submitList(it.data)
+                    is Resource.Success -> {
+                        bestProductsAdapter.differ.submitList(it.data)
                         binding.bestProductsProgressbar.visibility = View.GONE
+
 
                     }
-                    is Resource.Error->{
-
+                    is Resource.Error -> {
+                        Log.e(TAG, it.message.toString())
+                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                         binding.bestProductsProgressbar.visibility = View.GONE
-                        Log.e(TAG,it.message.toString())
-                        Toast.makeText(requireContext(),it.message,Toast.LENGTH_LONG).show()
+
                     }
                     else -> Unit
                 }
             }
         }
-        binding.nestedScrollMainCategory.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener{v,_,scrollY,_,_->
-        if(v.getChildAt(0).bottom<=v.height+scrollY){
-            viewModel.fetchBestProducts()
-        }
+
+        binding.nestedScrollMainCategory.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, _ ->
+            if (v.getChildAt(0).bottom <= v.height + scrollY) {
+                viewModel.fetchBestProducts()
+            }
         })
     }
 
-    private fun setupBestProductRv() {
-        bestProductAdapter = BestProductAdapter()
+    private fun setupBestProducts() {
+        bestProductsAdapter = BestProductAdapter()
         binding.rvBestProducts.apply {
-            layoutManager = GridLayoutManager(requireContext(), 2,GridLayoutManager.VERTICAL,false)
-            adapter = bestProductAdapter
+            layoutManager =
+                GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
+            adapter = bestProductsAdapter
         }
     }
 
@@ -133,15 +155,15 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = bestDealsAdapter
         }
-
     }
 
     private fun hideLoading() {
-        binding.mainCategoryProgressbar.visibility =View.GONE
+        binding.mainCategoryProgressbar.visibility = View.GONE
     }
 
     private fun showLoading() {
-        binding.mainCategoryProgressbar.visibility =View.VISIBLE
+        binding.mainCategoryProgressbar.visibility = View.VISIBLE
+
     }
 
     private fun setupSpecialProductsRv() {
@@ -151,6 +173,11 @@ class MainCategoryFragment : Fragment(R.layout.fragment_main_category) {
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = specialProductsAdapter
         }
-
     }
+
+    override fun onResume() {
+        super.onResume()
+        showBottomNavigationView()
+    }
+
 }
