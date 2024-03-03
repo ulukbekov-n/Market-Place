@@ -14,10 +14,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.marketplace.adapters.ColorsAdapter
 import com.example.marketplace.adapters.SizesAdapter
 import com.example.marketplace.adapters.ViewPager2Images
+import com.example.marketplace.data.CartProduct
 import com.example.marketplace.util.Resource
 import com.example.marketplace.util.hideBottomNavigationView
+import com.example.marketplace.viewmodel.DetailsViewModel
+import com.example.newapptester1.R
 import com.example.newapptester1.databinding.FragmentProductDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class ProductDetailsFragment : Fragment() {
@@ -28,6 +32,7 @@ class ProductDetailsFragment : Fragment() {
     private val colorsAdapter by lazy { ColorsAdapter() }
     private var selectedColor: Int? = null
     private var selectedSize: String? = null
+    private val viewModel by viewModels<DetailsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,7 +65,30 @@ class ProductDetailsFragment : Fragment() {
             selectedColor = it
         }
 
+        binding.buttonAddToCart.setOnClickListener {
+            viewModel.addUpdateProductInCart(CartProduct(product, 1, selectedColor, selectedSize))
+        }
 
+        lifecycleScope.launchWhenStarted {
+            viewModel.addToCart.collectLatest {
+                when (it) {
+                    is Resource.Loading -> {
+                        binding.buttonAddToCart.startAnimation()
+                    }
+
+                    is Resource.Success -> {
+                        binding.buttonAddToCart.revertAnimation()
+                        binding.buttonAddToCart.setBackgroundColor(resources.getColor(R.color.black))
+                    }
+
+                    is Resource.Error -> {
+                        binding.buttonAddToCart.stopAnimation()
+                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    }
+                    else -> Unit
+                }
+            }
+        }
 
         binding.apply {
             tvProductName.text = product.name

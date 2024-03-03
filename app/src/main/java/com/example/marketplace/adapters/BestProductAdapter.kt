@@ -9,24 +9,22 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.marketplace.data.Product
+import com.example.marketplace.helper.getProductPrice
 import com.example.newapptester1.databinding.BestDealsRvItemBinding
 import com.example.newapptester1.databinding.ProductRvItemBinding
-
-class BestProductAdapter:RecyclerView.Adapter<BestProductAdapter.BestProductsViewHolder>() {
+class BestProductAdapter : RecyclerView.Adapter<BestProductAdapter.BestProductsViewHolder>() {
 
     inner class BestProductsViewHolder(private val binding: ProductRvItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Product) {
             binding.apply {
-                Glide.with(itemView).load(product.images[0]).into(imgProduct)
-                product.offerPercentage?.let {
-                    val remainingPricePercentage = 1f - it
-                    val priceAfterOffer = remainingPricePercentage * product.price
-                    tvNewPrice.text = "$ ${String.format("%.2f", priceAfterOffer)}"
-                    tvPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-                }
+                val priceAfterOffer = product.offerPercentage.getProductPrice(product.price)
+                tvNewPrice.text = "$ ${String.format("%.2f", priceAfterOffer)}"
+                tvPrice.paintFlags = tvPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 if (product.offerPercentage == null)
-                    tvNewPrice.visibility = View.VISIBLE
+                    tvNewPrice.visibility = View.INVISIBLE
+
+                Glide.with(itemView).load(product.images[0]).into(imgProduct)
                 tvPrice.text = "$ ${product.price}"
                 tvName.text = product.name
             }
@@ -37,13 +35,14 @@ class BestProductAdapter:RecyclerView.Adapter<BestProductAdapter.BestProductsVie
     private val diffCallback = object : DiffUtil.ItemCallback<Product>() {
         override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
             return oldItem.id == newItem.id
+
         }
 
         override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
             return oldItem == newItem
         }
-
     }
+
     val differ = AsyncListDiffer(this, diffCallback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BestProductsViewHolder {
@@ -66,5 +65,7 @@ class BestProductAdapter:RecyclerView.Adapter<BestProductAdapter.BestProductsVie
     override fun getItemCount(): Int {
         return differ.currentList.size
     }
+
     var onClick: ((Product) -> Unit)? = null
+
 }

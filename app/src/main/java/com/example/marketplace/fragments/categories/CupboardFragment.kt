@@ -14,7 +14,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 @AndroidEntryPoint
-class CupboardFragment:BaseCategoryFragment() {
+class CupboardFragment: BaseCategoryFragment() {
+
     @Inject
     lateinit var firestore: FirebaseFirestore
 
