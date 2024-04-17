@@ -3,6 +3,7 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
+
     }
 }
 dependencyResolutionManagement {
@@ -10,11 +11,11 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        //noinspection JcenterRepositoryObsolete
         jcenter()
+        maven { url = uri("https://jitpack.io") }
+
     }
 }
-
 rootProject.name = "MarketPlace"
 include(":app")
  

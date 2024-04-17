@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name = "android.permission.CAMERA"/>
     <application
         android:name="com.example.marketplace.MarketApp"
         android:allowBackup="true"
@@ -27,7 +33,11 @@
 
         <activity
             android:name="com.example.marketplace.activity.ShoppingActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+        <activity android:name="com.example.marketplace.fragments.shopping.ScannerActivity" />
+
 
 
 

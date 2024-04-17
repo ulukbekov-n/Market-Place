@@ -65,7 +65,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
-            android:text="Keline dose not support virtual payments. You can pay when you receive your order."
+            android:text="This app dose not support virtual payments. You can pay when you receive your order."
             android:textColor="@color/black"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="@id/guideline2"

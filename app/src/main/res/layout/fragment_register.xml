@@ -65,11 +65,24 @@
         android:layout_width="320dp"
         android:layout_height="50dp"
         android:layout_marginTop="35dp"
-        android:hint="Имя пользователя"
+        android:hint="Имя"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="@id/RegisterButton"
         app:layout_constraintStart_toStartOf="@id/RegisterButton"
         app:layout_constraintTop_toBottomOf="@id/textAuto" />
+    <EditText
+        android:id="@+id/edLastNameRegister"
+        style="@style/editText"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:hint="Фамилия"
+        app:layout_constraintTop_toBottomOf="@id/userNameRegister"
+        app:layout_constraintStart_toStartOf="@id/userNameRegister"
+        app:layout_constraintEnd_toEndOf="@id/userNameRegister"
+        android:inputType="textPersonName"
+         />
+
 
     <EditText
         android:id="@+id/emailRegisterIP"
@@ -81,7 +94,7 @@
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="@id/RegisterButton"
         app:layout_constraintStart_toStartOf="@id/RegisterButton"
-        app:layout_constraintTop_toBottomOf="@id/userNameRegister" />
+        app:layout_constraintTop_toBottomOf="@id/edLastNameRegister" />
 
     <EditText
         android:id="@+id/passwordRegister"
@@ -106,7 +119,7 @@
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline6"
+        app:layout_constraintTop_toBottomOf="@id/passwordRegister"
         app:spinning_bar_color="@color/white"/>
 
     <androidx.cardview.widget.CardView

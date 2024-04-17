@@ -120,7 +120,7 @@ class UserAccountFragment : Fragment() {
         binding.apply {
             Glide.with(this@UserAccountFragment).load(data.imagePath).error(ColorDrawable(Color.BLACK)).into(imageUser)
             edFirstName.setText(data.firstName)
-//            edLastName.setText(data.lastName)
+            edLastName.setText(data.lastName)
             edEmail.setText(data.email)
         }
     }

@@ -48,6 +48,7 @@ android {
     buildFeatures {
         compose = true
         viewBinding = true
+        mlModelBinding = true
     }
 
     composeOptions {
@@ -71,6 +72,8 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore:24.10.1")
     implementation("com.google.firebase:firebase-storage:20.3.0")
     implementation("com.google.firebase:firebase-analytics:21.5.1")
+    implementation("org.tensorflow:tensorflow-lite-support:0.3.1")
+    implementation("org.tensorflow:tensorflow-lite-metadata:0.1.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -116,6 +119,14 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
 
     implementation ("com.github.skydoves:colorpickerview:2.2.4")
+
+    implementation("org.tensorflow:tensorflow-lite-support: 0.3.1")
+    implementation("org.tensorflow:tensorflow-lite-metadata: 0.1.0")
+
+    implementation ("com.airbnb.android:lottie:5.0.3")
+    implementation ("com.github.smarteist:autoimageslider:1.4.0")
+    implementation ("com.github.denzcoskun:ImageSlideshow:0.1.0")
+
 
 
 

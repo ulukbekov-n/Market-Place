@@ -12,14 +12,11 @@ import androidx.navigation.fragment.findNavController
 import com.example.marketplace.data.User
 import com.example.marketplace.util.RegisterValidation
 import com.example.marketplace.util.Resource
-import com.example.marketplace.util.validateEmail
 import com.example.marketplace.viewmodel.RegisterViewModel
 import com.example.newapptester1.R
 import com.example.newapptester1.databinding.FragmentRegisterBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 private val TAG = "RegisterFragment"
@@ -40,14 +37,15 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.toLoginButton.setOnClickListener{
+        binding.toLoginButton.setOnClickListener {
             findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
         }
         binding.apply {
             RegisterButton.setOnClickListener {
                 val user = User(
                     userNameRegister.text.toString().trim(),
-                    emailRegisterIP.text.toString().trim()
+                    emailRegisterIP.text.toString().trim(),
+                    edLastNameRegister.text.toString().trim()
                 )
                 val password = passwordRegister.text.toString()
                 viewModel.createAccountWithEmailAndPassword(user, password)
@@ -75,7 +73,7 @@ class RegisterFragment : Fragment() {
             }
         }
         lifecycleScope.launchWhenStarted {
-            viewModel.validation.collect() { validation ->
+            viewModel.validation.collect { validation ->
                 if (validation.email is RegisterValidation.Failed) {
                     withContext(Dispatchers.Main) {
                         binding.emailRegisterIP.apply {
@@ -84,17 +82,20 @@ class RegisterFragment : Fragment() {
                         }
                     }
                 }
-                if (validation.password is RegisterValidation.Failed){
+                if (validation.password is RegisterValidation.Failed) {
                     withContext(Dispatchers.Main) {
                         binding.passwordRegister.apply {
                             requestFocus()
                             error = validation.password.message
                         }
                     }
-
                 }
             }
-
         }
     }
+    fun validateEmail(email: String): Boolean {
+        val emailRegex = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})"
+        return email.matches(emailRegex.toRegex())
+    }
+
 }

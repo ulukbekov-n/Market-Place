@@ -13,6 +13,12 @@
         <action
             android:id="@+id/action_homeFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_scannerActivity"
+            app:destination="@id/scannerActivity" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -22,6 +28,9 @@
         <action
             android:id="@+id/action_searchFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/cartFragment"
@@ -95,6 +104,7 @@
         <argument
             android:name="products"
             app:argType="com.example.marketplace.data.CartProduct[]" />
+
     </fragment>
     <fragment
         android:id="@+id/userAccountFragment"
@@ -118,4 +128,8 @@
             android:name="order"
             app:argType="com.example.marketplace.data.order.Order" />
     </fragment>
+    <activity
+        android:id="@+id/scannerActivity"
+        android:name="com.example.marketplace.fragments.shopping.ScannerActivity"
+        android:label="ScannerActivity" />
 </navigation>

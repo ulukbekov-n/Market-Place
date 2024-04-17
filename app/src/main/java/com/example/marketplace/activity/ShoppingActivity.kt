@@ -2,6 +2,7 @@ package com.example.marketplace.activity
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -31,7 +32,14 @@ class ShoppingActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.shoppingHostFragment)
         binding.bottomNavigation.setupWithNavController(navController)
-
+        binding.root.viewTreeObserver.addOnGlobalLayoutListener {
+            val heightDiff = binding.root.rootView.height - binding.root.height
+            if (heightDiff > 100) {
+                binding.bottomNavigation.visibility = View.GONE
+            } else {
+                binding.bottomNavigation.visibility = View.VISIBLE
+            }
+        }
 //        observeCartProducts()
     }
 
